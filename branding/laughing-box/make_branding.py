@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the Laughbox brand kit (logo, avatar, banners, watermark) with Cairo.
+"""Render the Laughing Box brand kit (logo, avatar, banners, watermark) with Cairo.
 
   python make_branding.py OUT_DIR
 
@@ -25,6 +25,8 @@ BOX_DARK = "#d9822b"
 SUN = "#ffd23f"
 PINK = "#ff4d8d"
 LETTER_COLS = ["#ffd23f", "#ff7a3d", "#ff4d8d", "#9b6bff", "#2fb7ff", "#25c486", "#ffd23f", "#ff7a3d"]
+NAME = "LAUGHING BOX"
+HANDLE = "@The_Laughingbox"
 TAGLINE = "CARTOON COMEDY  \u2022  NEW EVERY WEEK"
 
 
@@ -111,16 +113,31 @@ def mascot(ctx, cx, cy, s, ha=True):
     ctx.restore()
 
 
-def wordmark(ctx, cx, cy, size, word="LAUGHBOX"):
-    """Bouncy multi-colour sticker letters centred on (cx, cy); returns total width."""
+def wordmark(ctx, cx, cy, size, word=NAME, max_w=None):
+    """Bouncy multi-colour sticker letters centred on (cx, cy); shrinks to fit max_w. Returns width."""
     ctx.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
     ctx.set_font_size(size)
-    adv = [ctx.text_extents(ch)[4] * 0.97 for ch in word]
+
+    def advances():
+        return [ctx.text_extents(ch)[4] * (0.97 if ch != " " else 1.6) for ch in word]
+
+    adv = advances()
+    if max_w and sum(adv) + size * 0.3 > max_w:
+        size *= max_w / (sum(adv) + size * 0.3)
+        ctx.set_font_size(size)
+        adv = advances()
     total = sum(adv)
+    cols, k = [], 0
+    for ch in word:
+        cols.append(LETTER_COLS[k % len(LETTER_COLS)])
+        k += ch != " "
     # passes drawn across all letters so outlines never cut into neighbours
     for pass_ in ("shadow", "white", "main"):
         x = cx - total / 2
         for i, ch in enumerate(word):
+            if ch == " ":
+                x += adv[i]
+                continue
             ctx.save()
             ox, oy = (size * 0.04, size * 0.08) if pass_ == "shadow" else (0, 0)
             ctx.translate(x + adv[i] / 2 + ox, cy + (-0.05 if i % 2 else 0.03) * size + oy)
@@ -139,7 +156,7 @@ def wordmark(ctx, cx, cy, size, word="LAUGHBOX"):
                 ctx.set_line_join(cairo.LINE_JOIN_ROUND)
                 ctx.stroke()
             else:
-                mv.text(ctx, ch, 0, 0, size, LETTER_COLS[i % len(LETTER_COLS)], ol=size * 0.1)
+                mv.text(ctx, ch, 0, 0, size, cols[i], ol=size * 0.1)
             ctx.restore()
             x += adv[i]
     return total
@@ -244,10 +261,11 @@ def cast(ctx, x, y, s, P, expr, look, pose=None, floor=True):
 
 # ---------------------------------------------------------------- assets
 def logo(out):
-    s, ctx = surface(2000, 1300, alpha=True)
+    s, ctx = surface(2000, 1480, alpha=True)
     mascot(ctx, 975, 600, 1.0)
-    wordmark(ctx, 1000, 1080, 230)
-    s.write_to_png(os.path.join(out, "laughbox-logo.png"))
+    wordmark(ctx, 1000, 1010, 220, "LAUGHING", max_w=1900)
+    wordmark(ctx, 1000, 1270, 220, "BOX")
+    s.write_to_png(os.path.join(out, "laughing-box-logo.png"))
 
 
 def avatar(out, size=800):
@@ -286,9 +304,10 @@ def youtube_banner(out):
     cast(ctx, 2140, 1380, 0.62, GRANDMA, "happy", (-0.6, 0))
     cast(ctx, 2410, 1370, 0.56, TEEN, "happy", (-0.8, 0), dict(la1=-160, la2=-170))
     # logo + tagline inside the safe area (x 507-2053, y 508-931)
-    mascot(ctx, 790, 790, 0.5)
-    wordmark(ctx, 1515, 690, 150)
-    pill(ctx, TAGLINE, 1515, 845, 40)
+    mascot(ctx, 760, 780, 0.5)
+    wordmark(ctx, 1490, 650, 150, max_w=1060)
+    pill(ctx, TAGLINE, 1490, 785, 36)
+    mv.text(ctx, HANDLE, 1490, 878, 44, "#ffffff", ol=10)
     s.write_to_png(os.path.join(out, "youtube-banner-2560x1440.png"))
     # review copy with safe areas drawn
     ctx.rectangle(507, 508, 1546, 423)
@@ -306,13 +325,15 @@ def facebook_cover(out):
     s, ctx = surface(W, H)
     sunburst(ctx, W, H, W / 2, H * 0.55)
     dots(ctx, W, H, a=0.1)
-    confetti(ctx, W, H, seed=9, n=70, avoid=[(300, 80, 1340, 500)])
+    confetti(ctx, W, H, seed=9, n=70, avoid=[(300, 50, 1360, 510)])
     # characters peek in from the edges; logo/text stay in the centre that mobile keeps
     cast(ctx, 160, 1060, 0.62, GRANDPA, "victory", (0.6, 0), dict(la1=-155, la2=-170), floor=False)
     cast(ctx, 1490, 1060, 0.6, GRANDMA, "happy", (-0.6, 0), dict(ra1=155, ra2=170), floor=False)
-    mascot(ctx, 470, 380, 0.48)
-    wordmark(ctx, 1000, 290, 104)
-    pill(ctx, TAGLINE, 1000, 420, 29)
+    mascot(ctx, 460, 390, 0.46)
+    wordmark(ctx, 1010, 165, 100, "LAUGHING", max_w=680)
+    wordmark(ctx, 1010, 280, 100, "BOX")
+    pill(ctx, TAGLINE, 1010, 390, 26)
+    mv.text(ctx, "YouTube  " + HANDLE, 1010, 462, 30, "#ffffff", ol=8)
     s.write_to_png(os.path.join(out, "facebook-cover-1640x624.png"))
 
 
