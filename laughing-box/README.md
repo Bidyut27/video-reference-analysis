@@ -9,6 +9,7 @@ Original cartoon comedy for everyone 🌍 · Channel **Laughing Box** · Handle 
 | 1 | Grandpa vs. the Self-Checkout | [voice](episodes/01-grandpa-vs-self-checkout/grandpa-vs-self-checkout-voice.mp4) · [wordless](episodes/01-grandpa-vs-self-checkout/grandpa-vs-self-checkout.mp4) (1080p) | [cover](episodes/01-grandpa-vs-self-checkout/cover-1080x1920.png) | Titles and hashtags were given in chat; README has the story |
 | 2 | Grandpa vs. the Video Call | [video](episodes/02-grandpa-vs-video-call/grandpa-vs-video-call.mp4) (1080p) | [cover](episodes/02-grandpa-vs-video-call/cover-1080x1920.png) | [README](episodes/02-grandpa-vs-video-call/README.md#posting-copy) |
 | 3 | Grandma vs. the Robot Vacuum | [video](episodes/03-grandma-vs-robot-vacuum/grandma-vs-robot-vacuum-4k.mp4) (**4K**) | [cover](episodes/03-grandma-vs-robot-vacuum/cover-1080x1920.png) | [README](episodes/03-grandma-vs-robot-vacuum/README.md#posting-copy) |
+| 4 | Leo vs. Homework | [video](episodes/04-leo-vs-homework/leo-vs-homework-4k.mp4) (**4K**) | [cover](episodes/04-leo-vs-homework/cover-1080x1920.png) | [README](episodes/04-leo-vs-homework/README.md#posting-copy) |
 
 Each episode folder also holds the scripts that rebuild it (story, picture, voices, sound, cover) and a contact sheet for review.
 

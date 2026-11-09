@@ -37,6 +37,7 @@ Flat 2D vector cartoon: big round heads, thick dark outlines, rosy cheeks, simpl
 | Machines (kiosk etc.) | n/a | `af_nicole`, 1.0, 0, plus a robot ring-mod filter |
 | **Biscuit** | Robot vacuum with a **pink** bow and a heart LED | (silent; motor, bonks, hiccups) |
 | **Cookie** | Robot vacuum with a **blue** bow | (silent) |
+| **Mittens** | Leo's orange tabby cat with green eyes and a smug half-lidded look; sits on homework | (silent; meow, purr) |
 
 Caption colours: Grandpa `#ffd25a`, Grandma `#e3c4ff`, Leo `#8fd3ff`, teen `#7ff0e3`, machines `#ffffff`.
 
@@ -49,6 +50,7 @@ Caption colours: Grandpa `#ffd25a`, Grandma `#e3c4ff`, Leo `#8fd3ff`, teen `#7ff
 | Leo's room (blue walls, GAME ON poster, night-sky picture) | `leo_bg` in episode 2 |
 | Phone and video-call UI, cat filter | `phone`, `call_ui`, `cat_filter` in episode 2 |
 | Robot vacuum, yarn ball, knitting basket | `vacuum`, `yarn_ball`, `basket` in episode 3 |
+| Leo's desk with lamp, day-to-night window, wall clock, books, pencil, sharpener, crayon, Mittens | `room_bg`, `desk`, `clock`, `book`, `pencil`, `cat` in episode 4 |
 
 ## Sound
 
@@ -61,5 +63,6 @@ All synthesised: theme music at 130 BPM in C–F–G–C (marimba melody, plucke
 | 1 | Grandpa vs. the Self-Checkout | `laughing-box/episodes/01-grandpa-vs-self-checkout/` | The kiosk rejects his melon; Grandma's karate chop fixes it; he paid for a stranger's giant cart | 1080p, wordless + voice versions |
 | 2 | Grandpa vs. the Video Call | `laughing-box/episodes/02-grandpa-vs-video-call/` | Nose, forehead and cat-filter calls with Leo; Grandma fixes it, then turns herself into a cat | 1080p, voice |
 | 3 | Grandma vs. the Robot Vacuum | `laughing-box/episodes/03-grandma-vs-robot-vacuum/` | She adopts it as "Biscuit"; Grandpa rides it and crashes; she brings home "Cookie" | **4K**, voice |
+| 4 | Leo vs. Homework | `laughing-box/episodes/04-leo-vs-homework/` | Phone, cat and pencil distractions; Grandpa "helps" with wild math; it was the history homework | **4K**, voice |
 
-Unused ideas: Leo vs. Homework · Grandpa vs. the Smart Speaker · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).
+Unused ideas: Grandpa vs. the Smart Speaker · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).

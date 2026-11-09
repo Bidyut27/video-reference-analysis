@@ -17,7 +17,7 @@ Read these before starting:
 - [`references/series-bible.md`](references/series-bible.md): characters, voices, colours, sets, episode log. **Stay on-model.**
 - [`../../../laughing-box/production/blueprint.md`](../../../laughing-box/production/blueprint.md): story structure, safe zones and audio rules.
 - [`../../../laughing-box/production/templates.md`](../../../laughing-box/production/templates.md): QC checklist (section 5).
-- The newest episode folder under `laughing-box/episodes/` is the template to copy (currently `laughing-box/episodes/03-grandma-vs-robot-vacuum/`). Name new folders `NN-<slug>` (next number, e.g. `04-leo-vs-homework`).
+- The newest episode folder under `laughing-box/episodes/` is the template to copy (currently `laughing-box/episodes/04-leo-vs-homework/`). Name new folders `NN-<slug>` with the next number (e.g. `05-grandpa-vs-the-smart-speaker`).
 
 No code execution (a chat-only AI)? Use [`references/chat-prompt.md`](references/chat-prompt.md) instead.
 
@@ -76,7 +76,7 @@ Reuse the series SFX (`ep1.audio().SFX`, `ep1.ep2_audio().SFX`) and theme music 
 ```bash
 VOICE_WAV=voice_track.wav python make_audio.py /tmp/soundtrack.wav
 python make_video.py /tmp/picture.mp4            # 4K; run in the background (~6 min on 4 cores)
-ffmpeg -i /tmp/picture.mp4 -i /tmp/soundtrack.wav -filter:a "loudnorm=I=-14:TP=-1.5:LRA=11" \
+ffmpeg -i /tmp/picture.mp4 -i /tmp/soundtrack.wav -filter:a "loudnorm=I=-14:TP=-2.5:LRA=11,alimiter=limit=0.84:level=false" \
   -c:v copy -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart <slug>-4k.mp4
 ffmpeg -i <slug>-4k.mp4 -vf "fps=1/2,scale=216:384,tile=6x5:padding=4" -frames:v 1 contact-sheet.jpg
 ```
