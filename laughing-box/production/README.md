@@ -1,5 +1,6 @@
 # Production Docs
 
+- [How the Animation Is Made](how-the-animation-is-made.md): every tool, the one-time setup and each production step for a Laughing Box episode
 - [Production Blueprint — 60–90 s animated stories](blueprint.md): format, story structure, visual/audio/edit rules
 - [Tools & Workflow](tools-and-workflow.md): AI and traditional toolchains, step-by-step pipeline, budgets
 - [Templates & Checklists](templates.md): script template, shot list, prompt templates, QC checklist, sample original story
