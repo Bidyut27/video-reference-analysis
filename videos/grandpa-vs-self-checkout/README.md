@@ -37,3 +37,30 @@ Edit the shots or SFX cue times in `timeline.py`. Both renderers read it, so pic
 ## Limits
 
 This is procedural vector animation: pose-to-pose motion, camera moves and overlays, without hand-drawn in-betweens or AI image-to-video. It shows the structure, timing and sound design of the blueprint. For the painterly look of the references, use the AI or 2D toolchains in [`production/tools-and-workflow.md`](../../production/tools-and-workflow.md) on the same shot list.
+
+## English voice version
+
+[`grandpa-vs-self-checkout-voice.mp4`](grandpa-vs-self-checkout-voice.mp4) (65.0 s; frame preview: [`contact-sheet-voice.jpg`](contact-sheet-voice.jpg)) adds:
+
+- **25 lines of character dialogue** spoken by [Kokoro](https://github.com/thewh1teagle/kokoro-onnx) TTS (open-weight, Apache-2.0), running offline. Each character has its own voice, speed and pitch. The kiosk voice gets a robotic ring-mod filter.
+- **Lip-sync:** mouths open with each line's loudness envelope, and the kiosk shows "speaking" sound waves.
+- **Burned-in captions,** colour-coded per character and placed inside the safe zone for viewers watching with the sound off.
+- **Ducking:** music dips about 60 % and SFX about 35 % under dialogue.
+- **Longer shots:** four shots run longer so every line fits (`VOICE_DURATIONS` in `timeline.py`).
+
+The script lives in `LINES` in `timeline.py`. A Whisper speech-to-text pass on the final mix recovered nearly every line. Shouted "Hi-YAH!" and short "See? Easy!" transcribe imperfectly, but the captions carry them.
+
+```bash
+pip install kokoro-onnx soundfile librosa
+# download kokoro-v1.0.onnx and voices-v1.0.bin from the kokoro-onnx "model-files-v1.0" release into MODEL_DIR
+export VOICE=1
+python make_voice.py MODEL_DIR voice_track.wav voice_track.json   # reports any line that overlaps the next
+VOICE_WAV=voice_track.wav python make_audio.py soundtrack.wav
+python make_video.py picture.mp4
+ffmpeg -i picture.mp4 -i soundtrack.wav -filter:a "loudnorm=I=-14:TP=-1.5:LRA=11" \
+  -c:v copy -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart grandpa-vs-self-checkout-voice.mp4
+```
+
+Without `VOICE=1`, the scripts build the original wordless cut unchanged.
+
+For more expressive acting, swap `synth()` in `make_voice.py` for a commercial TTS (e.g. ElevenLabs) or recorded actors. The timing, lip-sync and captions work the same way.

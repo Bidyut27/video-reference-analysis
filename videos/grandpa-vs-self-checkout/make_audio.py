@@ -6,6 +6,7 @@ licensed tracks.
 
   python make_audio.py soundtrack.wav
 """
+import os
 import sys
 import wave
 
@@ -335,28 +336,42 @@ def main():
     st = shot_starts()
     n = int((TOTAL + 0.5) * SR)
     mix = np.zeros(n)
+    mus = np.zeros(n)
 
-    def put(t0, x, g=1.0):
+    def put(t0, x, g=1.0, bus=None):
+        bus = mix if bus is None else bus
         i = int(t0 * SR)
         if i >= n:
             return
-        mix[i:i + len(x)] += (x * g)[: n - i]
+        bus[i:i + len(x)] += (x * g)[: n - i]
 
     # room tone throughout
     put(0, filt(noise(TOTAL), "low", 300) * 0.04)
     # quiet store pad until the conflict starts
-    put(0, pad(st["scan1"]), 0.35)
+    put(0, pad(st["scan1"]), 0.35, mus)
     # comedy score: enters on the first rejection, cut dead on the glitch (silence drop)
-    put(st["scan1"], fade(music(st["glitch"] - st["scan1"]), 0.01, 0.01), 0.8)
+    put(st["scan1"], fade(music(st["glitch"] - st["scan1"]), 0.01, 0.01), 0.8, mus)
     # resumes after the fanfare, then killed by the record scratch
-    put(st["victory"] + 2.6, fade(music(st["receipt"] - st["victory"] - 2.6), 0.05, 0.01), 0.8)
+    put(st["victory"] + 2.6, fade(music(st["receipt"] - st["victory"] - 2.6), 0.05, 0.01), 0.8, mus)
     # light marimba ditty for grandma, cut by the final buzz
     d = st["final"] + 0.95 - (st["grandma_pays"] + 0.9)
-    put(st["grandma_pays"] + 0.9, fade(music(d, drums=False, bass=True, mel_gain=0.45), 0.05, 0.03), 0.6)
+    put(st["grandma_pays"] + 0.9, fade(music(d, drums=False, bass=True, mel_gain=0.45), 0.05, 0.03), 0.6, mus)
 
     for name, _, cues in SHOTS:
         for lt, sname in cues:
             put(st[name] + lt, SFX[sname]())
+
+    voice_path = os.environ.get("VOICE_WAV")
+    if voice_path:
+        with wave.open(voice_path) as w:
+            v = np.frombuffer(w.readframes(w.getnframes()), "<i2").reshape(-1, 2)[:, 0] / 32768.0
+        v = np.pad(v, (0, max(0, n - len(v))))[:n]
+        # duck music and SFX under dialogue (~0.25 s release)
+        env = np.minimum(1, filt(np.abs(v), "low", 4) * 6)
+        mus *= 1 - 0.6 * env
+        mix *= 1 - 0.35 * env
+        mix += v * 1.1
+    mix += mus
 
     mix /= np.max(np.abs(mix)) / 0.9
     stereo = np.stack([mix, mix], axis=1)

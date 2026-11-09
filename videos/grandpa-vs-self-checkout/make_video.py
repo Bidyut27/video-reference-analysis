@@ -22,6 +22,35 @@ PI = math.pi
 INK = (0.09, 0.07, 0.10, 1.0)
 OL = 7.0
 
+# English voice version: VOICE=1 plus a voice_track.json from make_voice.py.
+VOICE = os.environ.get("VOICE") == "1"
+TRACK = []
+if VOICE:
+    import json
+    with open(os.environ.get("VOICE_TRACK", os.path.join(os.path.dirname(__file__), "voice_track.json"))) as _f:
+        TRACK = json.load(_f)["lines"]
+CUR_T = 0.0
+CAPTION_COL = {"grandpa": "#ffd25a", "grandma": "#e3c4ff", "teen": "#7ff0e3", "kiosk": "#ffffff",
+               "shopper": "#a6f08a", "woman": "#ffb3d1", "kid": "#ffe680"}
+
+
+def active_line(speaker=None):
+    for ln in TRACK:
+        if ln["start"] <= CUR_T < ln["end"] + 0.15 and (speaker is None or ln["speaker"] == speaker):
+            return ln
+    return None
+
+
+def talk_amp(speaker):
+    """Mouth openness 0..1 while `speaker` has an active line, else None."""
+    if not speaker:
+        return None
+    ln = active_line(speaker)
+    if ln is None or CUR_T >= ln["end"]:
+        return None
+    i = int((CUR_T - ln["start"]) * FPS)
+    return ln["env"][min(i, len(ln["env"]) - 1)]
+
 
 # ---------------------------------------------------------------- helpers
 def C(h, a=1.0):
@@ -171,6 +200,9 @@ Q_OLDMAN = dict(skin="#efc3a0", top="#7d8c99", sleeve="#7d8c99", style="plain", 
                 glasses=True)
 Q_KID = dict(skin="#e8b48c", top="#ffcf33", sleeve="#ffcf33", style="plain", pants="#3a6fd8",
              shoe="#e94f37", hair="spiky", hair_c="#6b3d1f", brow="#6b3d1f", nose="small")
+
+SPEAKER_OF = {id(GRANDPA): "grandpa", id(GRANDMA): "grandma", id(TEEN): "teen", id(SHOPPER): "shopper",
+              id(Q_WOMAN): "woman", id(Q_KID): "kid"}
 
 BROWS = {"neutral": (0, 0), "smug": (0.02, -0.06), "furious": (0.13, -0.05), "shock": (-0.14, -0.12),
          "cry": (-0.1, 0.05), "happy": (-0.06, -0.06), "victory": (-0.08, -0.08),
@@ -342,7 +374,16 @@ def face(ctx, x, y, r, expr, P, t=0.0, look=(0, 0), glasses_y=None, blink=False)
     # mouth
     my = y + (0.6 if P.get("moustache") else 0.47) * r
     dark = "#7a1f2b"
-    if expr in ("happy", "victory", "wink"):
+    amp = talk_amp(SPEAKER_OF.get(id(P)))
+    if amp is not None and expr not in ("shock", "yawn"):
+        oh = 0.025 + 0.2 * amp
+        ell(ctx, x, my + oh * 0.5 * r, (0.15 + 0.05 * amp) * r, oh * r)
+        fill_ol(ctx, dark, ol)
+        if amp > 0.35:
+            ell(ctx, x, my + oh * 1.05 * r, 0.09 * r, 0.04 * r)
+            setc(ctx, "#ff7f9b")
+            ctx.fill()
+    elif expr in ("happy", "victory", "wink"):
         ctx.new_path()
         ctx.move_to(x - 0.25 * r, my - 0.04 * r)
         ctx.curve_to(x - 0.2 * r, my + 0.3 * r, x + 0.2 * r, my + 0.3 * r, x + 0.25 * r, my - 0.04 * r)
@@ -655,6 +696,17 @@ def kiosk(ctx, x, y, s, state, g=0, scan=0.0):
     rrect(ctx, -150, -1180, 300, 80, 14)
     fill_ol(ctx, "#ffd23f")
     text(ctx, "SELF CHECKOUT", 0, -1140, 31, "#2b2f36")
+    amp = talk_amp("kiosk")
+    if amp:
+        for side in (-1, 1):
+            for k in range(3):
+                ctx.new_path()
+                a0 = -0.5 if side > 0 else PI - 0.5
+                ctx.arc(side * 175, -1140, 40 + k * 32, a0, a0 + 1.0)
+                setc(ctx, "#ffd23f", clamp(amp * 1.6 - k * 0.3))
+                ctx.set_line_width(12)
+                ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+                ctx.stroke()
     ctx.restore()
 
 
@@ -1373,16 +1425,46 @@ def locate(tg):
     return name, dur - 1e-3, dur
 
 
+def wrap(s, n=22):
+    out, cur = [], ""
+    for w in s.split():
+        if cur and len(cur) + 1 + len(w) > n:
+            out.append(cur)
+            cur = w
+        else:
+            cur = f"{cur} {w}".strip()
+    return out + [cur]
+
+
+def caption(ctx):
+    ln = active_line()
+    if ln is None:
+        return
+    rows = wrap(ln["text"])
+    k = eback((CUR_T - ln["start"]) / 0.12)
+    for i, row in enumerate(rows):
+        y = 1360 + (i - (len(rows) - 1) / 2) * 92
+        text(ctx, row, W / 2, y, 70 * (0.85 + 0.15 * k), CAPTION_COL.get(ln["speaker"], "#ffffff"), ol=16)
+
+
 def draw(ctx, name, t, d, g):
     ctx.save()
     SHOT_FUNCS[name](ctx, t, d, g)
     ctx.restore()
     vignette(ctx, 0.3)
+    if VOICE:
+        caption(ctx)
+
+
+def set_time(tg):
+    global CUR_T
+    CUR_T = tg
 
 
 def render_frame(fi):
     surf = cairo.ImageSurface(cairo.FORMAT_RGB24, W, H)
     ctx = cairo.Context(surf)
+    set_time(fi / FPS)
     name, t, d = locate(fi / FPS)
     draw(ctx, name, t, d, fi)
     surf.flush()
@@ -1397,6 +1479,7 @@ def main():
         for i, (name, dur, _) in enumerate(SHOTS):
             surf = cairo.ImageSurface(cairo.FORMAT_RGB24, W, H)
             ctx = cairo.Context(surf)
+            set_time(acc + dur * 0.7)
             draw(ctx, name, dur * 0.7, dur, int((acc + dur * 0.7) * FPS))
             surf.write_to_png(os.path.join(out, f"{i:02d}_{name}.png"))
             acc += dur
