@@ -64,7 +64,7 @@ Tag someone who video-calls like this 👇
 
 ## Rebuild
 
-Needs the same setup as [episode 1](../grandpa-vs-self-checkout/README.md#rebuild) (pycairo, numpy, scipy, ffmpeg, kokoro-onnx, soundfile, librosa and the Kokoro model files).
+Needs the same setup as [episode 1](../01-grandpa-vs-self-checkout/README.md#rebuild) (pycairo, numpy, scipy, ffmpeg, kokoro-onnx, soundfile, librosa and the Kokoro model files).
 
 ```bash
 python make_video.py --stills stills/                               # optional: one PNG per shot

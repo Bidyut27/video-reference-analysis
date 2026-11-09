@@ -97,5 +97,5 @@ All characters, brands ("FreshMart"), and situations are invented for this sampl
 - [ ] `cover-1080x1920.png` (9:16 only) for Shorts and Reels; title and faces inside the centre 3:4 area (y 240–1680) that Instagram's profile grid shows
 - [ ] Main character's face large, with a strong expression; the conflict readable without the text
 - [ ] Headline of 2–4 words in the "X VS Y" or similar series style, readable at phone size
-- [ ] Built with a `make_thumbnail.py` in the episode folder, following `videos/grandpa-vs-self-checkout/make_thumbnail.py`
+- [ ] Built with a `make_thumbnail.py` in the episode folder, following `laughing-box/episodes/01-grandpa-vs-self-checkout/make_thumbnail.py`
 - [ ] Titles, descriptions and hashtags written for YouTube, Facebook and Instagram

@@ -15,9 +15,9 @@ Laughing Box is an original cartoon comedy channel for a worldwide, all-ages aud
 Read these before starting:
 
 - [`references/series-bible.md`](references/series-bible.md): characters, voices, colours, sets, episode log. **Stay on-model.**
-- [`../../../production/blueprint.md`](../../../production/blueprint.md): story structure, safe zones and audio rules.
-- [`../../../production/templates.md`](../../../production/templates.md): QC checklist (section 5).
-- The newest episode folder under `videos/` is the template to copy (currently `videos/grandma-vs-robot-vacuum/`).
+- [`../../../laughing-box/production/blueprint.md`](../../../laughing-box/production/blueprint.md): story structure, safe zones and audio rules.
+- [`../../../laughing-box/production/templates.md`](../../../laughing-box/production/templates.md): QC checklist (section 5).
+- The newest episode folder under `laughing-box/episodes/` is the template to copy (currently `laughing-box/episodes/03-grandma-vs-robot-vacuum/`). Name new folders `NN-<slug>` (next number, e.g. `04-leo-vs-homework`).
 
 No code execution (a chat-only AI)? Use [`references/chat-prompt.md`](references/chat-prompt.md) instead.
 
@@ -25,10 +25,10 @@ No code execution (a chat-only AI)? Use [`references/chat-prompt.md`](references
 
 | File | Spec |
 |---|---|
-| `videos/<slug>/<slug>-4k.mp4` | 2160×3840, 24 fps, H.264 High + AAC 48 kHz, −14 LUFS integrated, peak ≤ −1 dBFS, 55–75 s |
-| `videos/<slug>/cover-1080x1920.png` | 9:16 cover only (no 16:9 thumbnail) |
-| `videos/<slug>/contact-sheet.jpg` | 1 frame / 2 s review sheet |
-| `videos/<slug>/README.md` | Story beats table, posting copy for all 3 platforms, rebuild commands |
+| `laughing-box/episodes/<NN-slug>/<slug>-4k.mp4` | 2160×3840, 24 fps, H.264 High + AAC 48 kHz, −14 LUFS integrated, peak ≤ −1 dBFS, 55–75 s |
+| `laughing-box/episodes/<NN-slug>/cover-1080x1920.png` | 9:16 cover only (no 16:9 thumbnail) |
+| `laughing-box/episodes/<NN-slug>/contact-sheet.jpg` | 1 frame / 2 s review sheet |
+| `laughing-box/episodes/<NN-slug>/README.md` | Story beats table, posting copy for all 3 platforms, rebuild commands |
 | Scripts | `timeline.py`, `make_video.py`, `make_voice.py`, `make_audio.py`, `make_thumbnail.py`, `ep1.py` (+ `voice_track.wav/.json`) |
 
 ## Workflow
@@ -109,4 +109,4 @@ Verify with ffprobe (2160×3840, frame count = duration × 24) and `ebur128` (I 
 - 100 % original. Never upload, trace or copy other creators' videos. The reference videos in `reference-analysis/` are for studying technique only.
 - Family-friendly comedy: no violence beyond cartoon slapstick, no insults about age, body, nationality or religion. The joke is the situation, never the person.
 - Keep characters on-model: same colours, outfits, voices and names as the bible.
-- Brand: channel **Laughing Box**, handle **@Officiallaughingbox** on all platforms. Brand kit in `branding/laughing-box/`.
+- Brand: channel **Laughing Box**, handle **@Officiallaughingbox** on all platforms. Brand kit in `laughing-box/brand-kit/`.

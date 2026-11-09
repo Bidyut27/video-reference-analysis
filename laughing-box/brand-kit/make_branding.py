@@ -14,7 +14,7 @@ import sys
 import cairo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "videos", "grandpa-vs-self-checkout"))
+sys.path.insert(0, os.path.join(HERE, "..", "episodes", "01-grandpa-vs-self-checkout"))
 import make_video as mv  # noqa: E402
 from make_video import (GRANDMA, GRANDPA, INK, PI, SHOPPER, TEEN, ell, fill_ol, person,  # noqa: E402
                         poly, rrect, setc, star4)

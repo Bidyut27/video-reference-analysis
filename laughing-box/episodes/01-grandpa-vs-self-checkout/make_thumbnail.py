@@ -12,7 +12,7 @@ import cairo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(HERE, "..", "..", "branding", "laughing-box"))
+sys.path.insert(0, os.path.join(HERE, "..", "..", "brand-kit"))
 import make_branding as mb  # noqa: E402
 import make_video as mv  # noqa: E402
 from make_video import GRANDPA, glow, impact_star, kiosk, person, star4  # noqa: E402

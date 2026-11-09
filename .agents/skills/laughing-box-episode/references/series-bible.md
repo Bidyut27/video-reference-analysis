@@ -1,6 +1,6 @@
 # Laughing Box series bible
 
-Keep every episode on-model. Character dicts live in `videos/grandpa-vs-self-checkout/make_video.py` (Leo in `videos/grandpa-vs-video-call/make_video.py`). Reuse them; don't redraw.
+Keep every episode on-model. Character dicts live in `laughing-box/episodes/01-grandpa-vs-self-checkout/make_video.py` (Leo in `laughing-box/episodes/02-grandpa-vs-video-call/make_video.py`). Reuse them; don't redraw.
 
 ## Brand
 
@@ -12,7 +12,7 @@ Keep every episode on-model. Character dicts live in `videos/grandpa-vs-self-che
 | Mascot | A laughing orange cardboard box with "HA HA HA" above it |
 | Palette | Sunburst yellow `#fff1a8` → orange `#ff9d2e`; letters `#ffd23f #ff7a3d #ff4d8d #9b6bff #2fb7ff #25c486`; outline ink `#17121a` |
 | Type | DejaVu Sans Bold, thick dark outline, bouncy multicolour letters |
-| Brand files | `branding/laughing-box/` (logo, profile, YouTube banner, Facebook cover, watermark) |
+| Brand files | `laughing-box/brand-kit/` (logo, profile, YouTube banner, Facebook cover, watermark) |
 
 ## Art style
 
@@ -58,8 +58,8 @@ All synthesised: theme music at 130 BPM in C–F–G–C (marimba melody, plucke
 
 | # | Title | Folder | Premise | Format |
 |---|---|---|---|---|
-| 1 | Grandpa vs. the Self-Checkout | `videos/grandpa-vs-self-checkout/` | The kiosk rejects his melon; Grandma's karate chop fixes it; he paid for a stranger's giant cart | 1080p, wordless + voice versions |
-| 2 | Grandpa vs. the Video Call | `videos/grandpa-vs-video-call/` | Nose, forehead and cat-filter calls with Leo; Grandma fixes it, then turns herself into a cat | 1080p, voice |
-| 3 | Grandma vs. the Robot Vacuum | `videos/grandma-vs-robot-vacuum/` | She adopts it as "Biscuit"; Grandpa rides it and crashes; she brings home "Cookie" | **4K**, voice |
+| 1 | Grandpa vs. the Self-Checkout | `laughing-box/episodes/01-grandpa-vs-self-checkout/` | The kiosk rejects his melon; Grandma's karate chop fixes it; he paid for a stranger's giant cart | 1080p, wordless + voice versions |
+| 2 | Grandpa vs. the Video Call | `laughing-box/episodes/02-grandpa-vs-video-call/` | Nose, forehead and cat-filter calls with Leo; Grandma fixes it, then turns herself into a cat | 1080p, voice |
+| 3 | Grandma vs. the Robot Vacuum | `laughing-box/episodes/03-grandma-vs-robot-vacuum/` | She adopts it as "Biscuit"; Grandpa rides it and crashes; she brings home "Cookie" | **4K**, voice |
 
 Unused ideas: Leo vs. Homework · Grandpa vs. the Smart Speaker · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).

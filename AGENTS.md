@@ -12,10 +12,10 @@ This repo produces **Laughing Box**, an original cartoon comedy channel. Videos,
 
 | Path | Contents |
 |---|---|
-| `videos/<episode>/` | One folder per episode: scripts, video, cover, README with posting copy |
-| `branding/laughing-box/` | Logo, profile picture, banners, watermark and their generator |
-| `production/` | Blueprint, templates, QC checklist, tool guide |
-| `reference-analysis/` | Analysis of reference videos (technique study only, never re-upload) |
+| `laughing-box/episodes/NN-<episode>/` | One numbered folder per episode: scripts, video, cover, README with posting copy |
+| `laughing-box/brand-kit/` | Logo, profile picture, banners, watermark and their generator |
+| `laughing-box/production/` | Blueprint, templates, QC checklist, tool guide |
+| `laughing-box/reference-analysis/` | Analysis of reference videos (technique study only, never re-upload) |
 
 ## Rules
 

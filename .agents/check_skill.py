@@ -25,16 +25,19 @@ else:
 if text.count("\n") > 500:
     errors.append("SKILL.md should stay under 500 lines")
 
-for base, files in ((SKILL_DIR, ["SKILL.md", "references/series-bible.md", "references/chat-prompt.md"]),
-                    (ROOT, ["AGENTS.md"])):
-    for f in files:
-        body = open(os.path.join(base, f), encoding="utf-8").read()
-        for link in re.findall(r"\]\(([^)#\s]+)(?:#[^)]*)?\)", body):
-            if "://" in link:
-                continue
-            p = os.path.normpath(os.path.join(base, os.path.dirname(f), link))
-            if not os.path.exists(p):
-                errors.append(f"{f}: broken link {link}")
+md_files = [(SKILL_DIR, f) for f in ("SKILL.md", "references/series-bible.md", "references/chat-prompt.md")]
+for d, _, fs in os.walk(ROOT):
+    if any(p in d for p in (os.sep + ".git", os.sep + ".hoplite", os.sep + ".context", os.sep + ".agents")):
+        continue
+    md_files += [(d, f) for f in fs if f.endswith(".md")]
+for base, f in md_files:
+    body = open(os.path.join(base, f), encoding="utf-8").read()
+    for link in re.findall(r"\]\(([^)#\s]+)(?:#[^)]*)?\)", body):
+        if "://" in link:
+            continue
+        p = os.path.normpath(os.path.join(base, os.path.dirname(f), link))
+        if not os.path.exists(p):
+            errors.append(f"{os.path.relpath(os.path.join(base, f), ROOT)}: broken link {link}")
 
 claude = os.path.join(ROOT, ".claude", "skills", "laughing-box-episode", "SKILL.md")
 if not os.path.exists(claude):

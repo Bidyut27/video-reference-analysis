@@ -68,7 +68,7 @@ Tag someone who would adopt a robot vacuum 👇
 
 ## Rebuild
 
-Needs the same setup as [episode 1](../grandpa-vs-self-checkout/README.md#rebuild) (pycairo, numpy, scipy, ffmpeg, kokoro-onnx, soundfile, librosa and the Kokoro model files).
+Needs the same setup as [episode 1](../01-grandpa-vs-self-checkout/README.md#rebuild) (pycairo, numpy, scipy, ffmpeg, kokoro-onnx, soundfile, librosa and the Kokoro model files).
 
 ```bash
 python make_video.py --stills stills/                               # optional: one 1080p PNG per shot
