@@ -27,7 +27,7 @@ PINK = "#ff4d8d"
 LETTER_COLS = ["#ffd23f", "#ff7a3d", "#ff4d8d", "#9b6bff", "#2fb7ff", "#25c486", "#ffd23f", "#ff7a3d"]
 NAME = "LAUGHING BOX"
 HANDLE = "@The_Laughingbox"
-TAGLINE = "CARTOON COMEDY  \u2022  NEW EVERY WEEK"
+TAGLINE = "CARTOON COMEDY"
 
 
 # ---------------------------------------------------------------- mascot
@@ -305,9 +305,8 @@ def youtube_banner(out):
     cast(ctx, 2410, 1370, 0.56, TEEN, "happy", (-0.8, 0), dict(la1=-160, la2=-170))
     # logo + tagline inside the safe area (x 507-2053, y 508-931)
     mascot(ctx, 760, 780, 0.5)
-    wordmark(ctx, 1490, 650, 150, max_w=1060)
-    pill(ctx, TAGLINE, 1490, 785, 36)
-    mv.text(ctx, HANDLE, 1490, 878, 44, "#ffffff", ol=10)
+    wordmark(ctx, 1490, 670, 150, max_w=1060)
+    pill(ctx, TAGLINE, 1490, 830, 52)
     s.write_to_png(os.path.join(out, "youtube-banner-2560x1440.png"))
     # review copy with safe areas drawn
     ctx.rectangle(507, 508, 1546, 423)
@@ -330,10 +329,9 @@ def facebook_cover(out):
     cast(ctx, 160, 1060, 0.62, GRANDPA, "victory", (0.6, 0), dict(la1=-155, la2=-170), floor=False)
     cast(ctx, 1490, 1060, 0.6, GRANDMA, "happy", (-0.6, 0), dict(ra1=155, ra2=170), floor=False)
     mascot(ctx, 460, 390, 0.46)
-    wordmark(ctx, 1010, 165, 100, "LAUGHING", max_w=680)
-    wordmark(ctx, 1010, 280, 100, "BOX")
-    pill(ctx, TAGLINE, 1010, 390, 26)
-    mv.text(ctx, "YouTube  " + HANDLE, 1010, 462, 30, "#ffffff", ol=8)
+    wordmark(ctx, 1010, 185, 100, "LAUGHING", max_w=680)
+    wordmark(ctx, 1010, 300, 100, "BOX")
+    pill(ctx, TAGLINE, 1010, 425, 36)
     s.write_to_png(os.path.join(out, "facebook-cover-1640x624.png"))
 
 

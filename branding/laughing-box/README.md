@@ -11,7 +11,7 @@ Channel name: **Laughing Box** · YouTube handle: **@The_Laughingbox**
 | `watermark-300x300.png` | YouTube video watermark (Customization → Branding) | 300×300 |
 | `_preview-youtube-banner-safe-areas.png` | Review only, do not upload: green = visible on all devices, blue = desktop | — |
 
-The logo, tagline and handle sit inside YouTube's 1546×423 safe area. On the Facebook cover they stay in the centre, so they aren't cropped on mobile.
+The logo and "Cartoon Comedy" tagline sit inside YouTube's 1546×423 safe area. On the Facebook cover they stay in the centre, so they aren't cropped on mobile.
 
 Facebook usernames can't contain underscores, so the Facebook page needs a variant such as `TheLaughingbox` or `The.Laughingbox`.
 
