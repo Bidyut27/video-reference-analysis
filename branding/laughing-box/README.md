@@ -1,6 +1,6 @@
 # Laughing Box brand kit
 
-Channel name: **Laughing Box** · YouTube handle: **@The_Laughingbox**
+Channel name: **Laughing Box** · Handle on every platform: **@Officiallaughingbox**
 
 | File | Use | Size |
 |---|---|---|
@@ -13,7 +13,6 @@ Channel name: **Laughing Box** · YouTube handle: **@The_Laughingbox**
 
 The logo and "Cartoon Comedy" tagline sit inside YouTube's 1546×423 safe area. On the Facebook cover they stay in the centre, so they aren't cropped on mobile.
 
-Facebook usernames can't contain underscores, so the Facebook page needs a variant such as `TheLaughingbox` or `The.Laughingbox`.
 
 Regenerate (uses the same characters as the episodes; name and handle are `NAME` / `HANDLE` at the top of the script):
 

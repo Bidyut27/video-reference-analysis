@@ -26,7 +26,7 @@ SUN = "#ffd23f"
 PINK = "#ff4d8d"
 LETTER_COLS = ["#ffd23f", "#ff7a3d", "#ff4d8d", "#9b6bff", "#2fb7ff", "#25c486", "#ffd23f", "#ff7a3d"]
 NAME = "LAUGHING BOX"
-HANDLE = "@The_Laughingbox"
+HANDLE = "@Officiallaughingbox"
 TAGLINE = "CARTOON COMEDY"
 
 
