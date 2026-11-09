@@ -92,3 +92,11 @@ All characters, brands ("FreshMart"), and situations are invented for this sampl
 - [ ] 1080×1920, 24/30 fps, 60–90 s
 - [ ] Caption question + 3–5 relevant hashtags
 - [ ] Licences logged; originality checklist passed
+
+**Thumbnails (required for every Laughing Box episode)**
+- [ ] `thumbnail-1280x720.png` for YouTube and Facebook long-form
+- [ ] `cover-1080x1920.png` for Shorts and Reels; title and faces inside the centre 3:4 area (y 240–1680) that Instagram's profile grid shows
+- [ ] Main character's face large, with a strong expression; the conflict readable without the text
+- [ ] Headline of 2–4 words in the "X VS Y" or similar series style, readable at phone size
+- [ ] Built with a `make_thumbnail.py` in the episode folder, following `videos/grandpa-vs-self-checkout/make_thumbnail.py`
+- [ ] Titles, descriptions and hashtags written for YouTube, Facebook and Instagram
