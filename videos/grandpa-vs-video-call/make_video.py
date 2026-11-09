@@ -774,7 +774,6 @@ SHOT_FUNCS = {
     "view_grandma_cat": sh_view_grandma_cat, "grandma_shock": sh_grandma_shock,
     "grandpa_laugh": sh_grandpa_laugh, "final_nose": sh_final_nose,
 }
-assert set(SHOT_FUNCS) == {n for n, _, _ in SHOTS}
 
 
 # ---------------------------------------------------------------- render
@@ -797,6 +796,8 @@ def render_frame(fi):
 
 
 def main():
+    # checked here, not at import, so later episodes can import this module's sets and props
+    assert set(SHOT_FUNCS) == {n for n, _, _ in SHOTS}
     if len(sys.argv) >= 3 and sys.argv[1] == "--stills":
         out = sys.argv[2]
         os.makedirs(out, exist_ok=True)
