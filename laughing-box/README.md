@@ -20,6 +20,7 @@ Each episode folder also holds the scripts that rebuild it (story, picture, voic
 |---|---|
 | [`episodes/`](episodes/) | One numbered folder per episode |
 | [`brand-kit/`](brand-kit/README.md) | Logo, profile picture, YouTube banner, Facebook cover, video watermark |
+| [`characters/`](characters/README.md) | Every character as a transparent PNG, cast poster, expression sheets |
 | [`production/`](production/README.md) | Story blueprint, templates, QC checklist, AI tools guide |
 | [`reference-analysis/`](reference-analysis/README.md) | What we learned from the reference videos (study only, never re-upload) |
 | [`claude/`](claude/README.md) | Claude and Antigravity setup: skill ZIP for claude.ai, Project instructions and knowledge files |

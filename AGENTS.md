@@ -16,6 +16,7 @@ This repo produces **Laughing Box**, an original cartoon comedy channel. Videos,
 |---|---|
 | `laughing-box/episodes/NN-<episode>/` | One numbered folder per episode: scripts, video, cover, README with posting copy |
 | `laughing-box/brand-kit/` | Logo, profile picture, banners, watermark and their generator |
+| `laughing-box/characters/` | Every character as a transparent PNG, cast poster, expression sheets (`make_characters.py`) |
 | `laughing-box/production/` | Blueprint, templates, QC checklist, tool guide |
 | `laughing-box/reference-analysis/` | Analysis of reference videos (technique study only, never re-upload) |
 
