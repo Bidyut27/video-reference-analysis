@@ -21,9 +21,11 @@ Each episode folder also holds the scripts that rebuild it (story, picture, voic
 | [`brand-kit/`](brand-kit/README.md) | Logo, profile picture, YouTube banner, Facebook cover, video watermark |
 | [`production/`](production/README.md) | Story blueprint, templates, QC checklist, AI tools guide |
 | [`reference-analysis/`](reference-analysis/README.md) | What we learned from the reference videos (study only, never re-upload) |
+| [`claude/`](claude/README.md) | Claude and Antigravity setup: skill ZIP for claude.ai, Project instructions and knowledge files |
 
 ## Using other AI tools
 
 - **Coding AIs** (Codex, Cursor, Claude Code, Gemini CLI, Copilot) read [`../AGENTS.md`](../AGENTS.md) and the skill in [`../.agents/skills/laughing-box-episode/`](../.agents/skills/laughing-box-episode/SKILL.md) automatically.
-- **Chat AIs** (ChatGPT, Gemini, Claude.ai, Grok): paste the prompt from [`chat-prompt.md`](../.agents/skills/laughing-box-episode/references/chat-prompt.md).
+- **Antigravity and claude.ai:** see [`claude/README.md`](claude/README.md) (skill ZIP, Project instructions, knowledge files).
+- **Other chat AIs** (ChatGPT, Gemini, Grok): paste the prompt from [`chat-prompt.md`](../.agents/skills/laughing-box-episode/references/chat-prompt.md).
 - **Characters, voices and the episode list:** [`series-bible.md`](../.agents/skills/laughing-box-episode/references/series-bible.md).

@@ -1,47 +1,72 @@
 #!/usr/bin/env python3
-"""Validate the Laughing Box skill: SKILL.md frontmatter (Agent Skills spec) and relative links."""
+"""Validate the Laughing Box AI files.
+
+Checks every skill's SKILL.md frontmatter (Agent Skills spec), the Antigravity rule
+frontmatter, all relative Markdown links, and that the generated Claude copies are fresh.
+"""
 import os
 import re
+import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SKILL_DIR = os.path.join(ROOT, ".agents", "skills", "laughing-box-episode")
+SKIP = (".git", ".hoplite", ".context", ".claude", "project-knowledge")
+# generated copies, verified against their sources by build_claude_files.py --check
+GENERATED = {os.path.join(ROOT, ".agents", "skills", "laughing-box-writer")}
 errors = []
 
-text = open(os.path.join(SKILL_DIR, "SKILL.md"), encoding="utf-8").read()
-m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
-if not m:
-    errors.append("SKILL.md: missing YAML frontmatter")
-else:
-    fm = m.group(1)
+
+def frontmatter(path):
+    text = open(path, encoding="utf-8").read()
+    m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    return (m.group(1) if m else None), text
+
+
+skill_dirs = [os.path.join(ROOT, ".agents", "skills", d) for d in sorted(os.listdir(os.path.join(ROOT, ".agents", "skills")))]
+for sd in skill_dirs:
+    rel = os.path.relpath(sd, ROOT)
+    fm, text = frontmatter(os.path.join(sd, "SKILL.md"))
+    if fm is None:
+        errors.append(f"{rel}/SKILL.md: missing YAML frontmatter")
+        continue
     name = re.search(r"^name:\s*(.+)$", fm, re.M)
     desc = re.search(r"^description:\s*(.+)$", fm, re.M)
-    if not name or not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name.group(1).strip()) or len(name.group(1).strip()) > 64:
-        errors.append("name must be lowercase-hyphenated, at most 64 chars")
-    elif name.group(1).strip() != os.path.basename(SKILL_DIR):
-        errors.append("name must match the skill folder name")
+    n = name.group(1).strip() if name else ""
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", n) or len(n) > 64:
+        errors.append(f"{rel}: name must be lowercase-hyphenated, at most 64 chars")
+    elif n != os.path.basename(sd):
+        errors.append(f"{rel}: name must match the folder name")
     if not desc or not (1 <= len(desc.group(1).strip()) <= 1024):
-        errors.append(f"description must be 1-1024 chars (got {len(desc.group(1).strip()) if desc else 0})")
-if text.count("\n") > 500:
-    errors.append("SKILL.md should stay under 500 lines")
+        errors.append(f"{rel}: description must be 1-1024 chars")
+    if text.count("\n") > 500:
+        errors.append(f"{rel}: SKILL.md should stay under 500 lines")
 
-md_files = [(SKILL_DIR, f) for f in ("SKILL.md", "references/series-bible.md", "references/chat-prompt.md")]
-for d, _, fs in os.walk(ROOT):
-    if any(p in d for p in (os.sep + ".git", os.sep + ".hoplite", os.sep + ".context", os.sep + ".agents")):
-        continue
-    md_files += [(d, f) for f in fs if f.endswith(".md")]
-for base, f in md_files:
-    body = open(os.path.join(base, f), encoding="utf-8").read()
-    for link in re.findall(r"\]\(([^)#\s]+)(?:#[^)]*)?\)", body):
-        if "://" in link:
+rules_dir = os.path.join(ROOT, ".agents", "rules")
+for f in sorted(os.listdir(rules_dir)) if os.path.isdir(rules_dir) else []:
+    fm, text = frontmatter(os.path.join(rules_dir, f))
+    trig = re.search(r"^trigger:\s*(\S+)", fm or "", re.M)
+    if not trig or trig.group(1) not in ("always_on", "model_decision", "glob", "manual"):
+        errors.append(f".agents/rules/{f}: needs trigger always_on|model_decision|glob|manual")
+    if len(text.encode()) > 24000:
+        errors.append(f".agents/rules/{f}: over Antigravity's 24 KB rule limit")
+
+for d, dirs, fs in os.walk(ROOT):
+    dirs[:] = [x for x in dirs if x not in SKIP and os.path.join(d, x) not in GENERATED]
+    for f in fs:
+        if not f.endswith(".md"):
             continue
-        p = os.path.normpath(os.path.join(base, os.path.dirname(f), link))
-        if not os.path.exists(p):
-            errors.append(f"{os.path.relpath(os.path.join(base, f), ROOT)}: broken link {link}")
+        body = open(os.path.join(d, f), encoding="utf-8").read()
+        for link in re.findall(r"\]\(([^)#\s]+)(?:#[^)]*)?\)", body):
+            if "://" in link:
+                continue
+            if not os.path.exists(os.path.normpath(os.path.join(d, link))):
+                errors.append(f"{os.path.relpath(os.path.join(d, f), ROOT)}: broken link {link}")
 
-claude = os.path.join(ROOT, ".claude", "skills", "laughing-box-episode", "SKILL.md")
-if not os.path.exists(claude):
-    errors.append(".claude/skills/laughing-box-episode does not resolve to the skill")
+build = subprocess.run([sys.executable, os.path.join(ROOT, "laughing-box", "claude", "build_claude_files.py"), "--check"],
+                       capture_output=True, text=True)
+if build.returncode:
+    errors.append("generated Claude files are stale; run python laughing-box/claude/build_claude_files.py:\n  "
+                  + build.stdout.strip().replace("\n", "\n  ") + build.stderr.strip())
 
-print("\n".join(errors) or "skill OK")
+print("\n".join(errors) or "skills, rules, links and Claude copies OK")
 sys.exit(1 if errors else 0)

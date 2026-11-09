@@ -27,12 +27,13 @@ CAST (keep them exactly on-model)
   on. Calm, smug, secretly better at tech, but has her own quirks. Warm older British female voice.
 - Leo (grandson): blue hoodie, brown spiky hair, freckles. Cheerful, facepalms a lot. Young bright voice.
 - Biscuit (pink bow) and Cookie (blue bow): Grandma's robot vacuums, which she treats as pets.
+- Mittens: Leo's orange tabby cat with green eyes and a smug half-lidded look; loves sitting on homework.
 - Supporting: teen supermarket staffer in a teal apron; machines speak in a flat robot voice.
 - Sets: Pickle Mart supermarket, the grandparents' living room (red armchair, curtained window,
   fish photo, floor lamp), Leo's blue bedroom.
 
 EPISODES ALREADY MADE (don't repeat): 1 Grandpa vs. the Self-Checkout, 2 Grandpa vs. the
-Video Call, 3 Grandma vs. the Robot Vacuum.
+Video Call, 3 Grandma vs. the Robot Vacuum, 4 Leo vs. Homework.
 
 STORY FORMULA (every episode)
 Hook (0-3 s, an absurd image, no establishing shot) -> Setup -> Escalation A -> Escalation B ->

@@ -102,7 +102,7 @@ Verify with ffprobe (2160×3840, frame count = duration × 24) and `ebur128` (I 
 
 - Remove `__pycache__`, commit the episode folder, and push.
 - Show the user the video (a 1080p preview is fine in chat; the 4K file lives in the repo), the cover, and the YouTube title. Report the measured duration, resolution, loudness, "ALL LINES FIT", and anything not verified (e.g. not watched on a phone with sound).
-- Add the episode to the log in `references/series-bible.md`.
+- Add the episode to the log in `references/series-bible.md` (and the cast table if there is a new character), add a row to `laughing-box/README.md`, then run `python laughing-box/claude/build_claude_files.py` so the Claude copies, writer skill and claude.ai ZIP pick it up. `python .agents/check_skill.py` must pass.
 
 ## Hard rules
 
