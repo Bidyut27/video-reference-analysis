@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the Laughbox brand kit (logo, avatars, banners, watermark) with Cairo.
+"""Render the Laughbox brand kit (logo, avatar, banners, watermark) with Cairo.
 
   python make_branding.py OUT_DIR
 
@@ -8,6 +8,7 @@ art matches the videos.
 """
 import math
 import os
+import random
 import sys
 
 import cairo
@@ -19,109 +20,141 @@ from make_video import (GRANDMA, GRANDPA, INK, PI, SHOPPER, TEEN, ell, fill_ol, 
                         poly, rrect, setc, star4)
 
 BOX = "#f2a54a"
+BOX_LIGHT = "#f8bf72"
 BOX_DARK = "#d9822b"
 SUN = "#ffd23f"
 PINK = "#ff4d8d"
-TEAL = "#1fa59a"
 LETTER_COLS = ["#ffd23f", "#ff7a3d", "#ff4d8d", "#9b6bff", "#2fb7ff", "#25c486", "#ffd23f", "#ff7a3d"]
+TAGLINE = "CARTOON COMEDY  \u2022  NEW EVERY WEEK"
 
 
 # ---------------------------------------------------------------- mascot
-def mascot(ctx, cx, cy, s):
-    """Laughing cardboard box. (cx, cy) is the centre of the box front; s=1 -> box 400 px wide."""
+def _ha_burst(ctx):
+    for x, y, rot, size, col in ((-170, -440, -0.32, 72, PINK), (40, -500, 0.04, 88, SUN),
+                                 (245, -430, 0.34, 68, "#2fb7ff")):
+        ctx.save()
+        ctx.translate(x, y)
+        ctx.rotate(rot)
+        mv.text(ctx, "HA", 0, 0, size, col, ol=15)
+        ctx.restore()
+    star4(ctx, -300, -370, 28, "#ffffff", 0.3)
+    star4(ctx, 370, -360, 24, "#ffffff", -0.2)
+
+
+def mascot(ctx, cx, cy, s, ha=True):
+    """Laughing open cardboard box. (cx, cy) = centre of the front face; s=1 -> front face 400 px."""
     ctx.save()
     ctx.translate(cx, cy)
     ctx.scale(s, s)
     ol = 12
-    # flying "HA"s and stars behind the lid
-    for x, y, rot, size, col in ((-150, -390, -0.35, 70, PINK), (10, -455, 0.05, 86, SUN),
-                                 (165, -385, 0.38, 66, "#2fb7ff")):
-        ctx.save()
-        ctx.translate(x, y)
-        ctx.rotate(rot)
-        mv.text(ctx, "HA", 0, 0, size, col, ol=14)
-        ctx.restore()
-    star4(ctx, -250, -300, 34, "#ffffff", 0.3)
-    star4(ctx, 255, -290, 28, "#ffffff", -0.2)
-    # back flaps
-    poly(ctx, [(-200, -200), (-120, -330), (120, -330), (200, -200)], close=True)
+    dx, dy = 60, -45  # depth offset of the back edge
+    if ha:
+        _ha_burst(ctx)
+    fl, fr = (-200, -200), (200, -200)
+    bl, br = (fl[0] + dx, fl[1] + dy), (fr[0] + dx, fr[1] + dy)
+    # back flap standing up
+    poly(ctx, [bl, br, (br[0] - 12, br[1] - 115), (bl[0] + 12, bl[1] - 115)], close=True)
     fill_ol(ctx, BOX_DARK, ol)
-    # box body (slight 3-D side)
-    poly(ctx, [(200, -200), (250, -235), (250, 165), (200, 200)], close=True)
+    # dark inside of the box
+    poly(ctx, [fl, fr, br, bl], close=True)
+    fill_ol(ctx, "#7a4518", ol)
+    # right side face
+    poly(ctx, [fr, br, (br[0], 200 + dy), (200, 200)], close=True)
     fill_ol(ctx, BOX_DARK, ol)
-    rrect(ctx, -200, -200, 400, 400, 22)
+    # front face
+    rrect(ctx, -200, -200, 400, 400, 10)
     fill_ol(ctx, BOX, ol)
-    # side flaps flung open like waving arms
-    poly(ctx, [(-200, -200), (-330, -290), (-300, -160), (-195, -150)], close=True)
-    fill_ol(ctx, BOX, ol)
-    poly(ctx, [(200, -200), (335, -300), (310, -165), (200, -150)], close=True)
-    fill_ol(ctx, BOX, ol)
-    # packing tape
-    rrect(ctx, -32, -200, 64, 70, 6)
-    setc(ctx, "#f7d39a")
+    # side flaps hinged on the top edges, flung outward like waving arms
+    poly(ctx, [fl, bl, (bl[0] - 145, bl[1] - 75), (fl[0] - 145, fl[1] - 75)], close=True)
+    fill_ol(ctx, BOX_LIGHT, ol)
+    poly(ctx, [fr, br, (br[0] + 150, br[1] - 15), (fr[0] + 150, fr[1] - 15)], close=True)
+    fill_ol(ctx, BOX_DARK, ol)
+    # front flap folded down over the top of the face, with packing tape
+    poly(ctx, [fl, fr, (194, -146), (-194, -146)], close=True)
+    fill_ol(ctx, BOX_LIGHT, ol)
+    ctx.rectangle(-28, -194, 56, 42)
+    setc(ctx, "#fbe0b0")
     ctx.fill()
     # face: happy closed eyes, rosy cheeks, big laughing mouth
+    ctx.set_line_cap(cairo.LINE_CAP_ROUND)
     for sd in (-1, 1):
         ctx.new_path()
-        ctx.arc(sd * 82, -60, 40, PI * 1.12, PI * 1.88)
+        ctx.arc(sd * 82, -38, 38, PI * 1.12, PI * 1.88)
         ctx.set_source_rgba(*INK)
         ctx.set_line_width(18)
-        ctx.set_line_cap(cairo.LINE_CAP_ROUND)
         ctx.stroke()
-        ell(ctx, sd * 128, 10, 34, 20)
+        ell(ctx, sd * 132, 28, 34, 20)
         setc(ctx, "#ff6f91", 0.55)
         ctx.fill()
-    ctx.new_path()
-    ctx.move_to(-115, 0)
-    ctx.curve_to(-105, 150, 105, 150, 115, 0)
-    ctx.close_path()
+
+    def mouth():
+        ctx.new_path()
+        ctx.move_to(-110, 12)
+        ctx.curve_to(-100, 160, 100, 160, 110, 12)
+        ctx.close_path()
+
+    mouth()
     ctx.save()
     ctx.clip_preserve()
     fill_ol(ctx, "#7a1f2b", ol)
-    rrect(ctx, -80, -10, 160, 30, 8)
+    rrect(ctx, -84, 4, 168, 28, 8)
     setc(ctx, "#ffffff")
     ctx.fill()
-    ell(ctx, 0, 112, 62, 34)
+    ell(ctx, 0, 124, 60, 34)
     setc(ctx, "#ff7f9b")
     ctx.fill()
     ctx.restore()
-    ctx.new_path()
-    ctx.move_to(-115, 0)
-    ctx.curve_to(-105, 150, 105, 150, 115, 0)
-    ctx.close_path()
+    mouth()
     ctx.set_source_rgba(*INK)
     ctx.set_line_width(ol)
     ctx.stroke()
     ctx.restore()
 
 
-def wordmark(ctx, cx, cy, size, word="LAUGHBOX", tilt=True):
-    """Bouncy, multi-colour letters; returns total width."""
+def wordmark(ctx, cx, cy, size, word="LAUGHBOX"):
+    """Bouncy multi-colour sticker letters centred on (cx, cy); returns total width."""
     ctx.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
     ctx.set_font_size(size)
-    adv = [ctx.text_extents(ch)[4] * 0.96 for ch in word]
+    adv = [ctx.text_extents(ch)[4] * 0.97 for ch in word]
     total = sum(adv)
-    x = cx - total / 2
-    for i, ch in enumerate(word):
-        lx = x + adv[i] / 2
-        dy = (-0.06 if i % 2 else 0.04) * size if tilt else 0
-        rot = (-0.07 if i % 2 else 0.06) if tilt else 0
-        for pass_ in ("shadow", "main"):
+    # passes drawn across all letters so outlines never cut into neighbours
+    for pass_ in ("shadow", "white", "main"):
+        x = cx - total / 2
+        for i, ch in enumerate(word):
             ctx.save()
-            ox, oy = (size * 0.05, size * 0.07) if pass_ == "shadow" else (0, 0)
-            ctx.translate(lx + ox, cy + dy + oy)
-            ctx.rotate(rot)
+            ox, oy = (size * 0.04, size * 0.08) if pass_ == "shadow" else (0, 0)
+            ctx.translate(x + adv[i] / 2 + ox, cy + (-0.05 if i % 2 else 0.03) * size + oy)
+            ctx.rotate(-0.06 if i % 2 else 0.05)
             if pass_ == "shadow":
-                mv.text(ctx, ch, 0, 0, size, (0.09, 0.07, 0.10, 0.9), ol=size * 0.2)
-            else:
-                mv.text(ctx, ch, 0, 0, size, LETTER_COLS[i % len(LETTER_COLS)], ol=size * 0.16)
+                mv.text(ctx, ch, 0, 0, size, (0.09, 0.07, 0.10, 0.85), ol=size * 0.32)
+            elif pass_ == "white":
+                # dark rim then white sticker border
+                mv.text(ctx, ch, 0, 0, size, "#ffffff", ol=size * 0.32)
+                xb, yb, tw, th, _, _ = ctx.text_extents(ch)
                 ctx.new_path()
-                ell(ctx, -size * 0.12, -size * 0.2, size * 0.07, size * 0.035)
-                setc(ctx, "#ffffff", 0.55)
-                ctx.fill()
+                ctx.move_to(-tw / 2 - xb, -th / 2 - yb)
+                ctx.text_path(ch)
+                setc(ctx, "#ffffff")
+                ctx.set_line_width(size * 0.22)
+                ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+                ctx.stroke()
+            else:
+                mv.text(ctx, ch, 0, 0, size, LETTER_COLS[i % len(LETTER_COLS)], ol=size * 0.1)
             ctx.restore()
-        x += adv[i]
+            x += adv[i]
     return total
+
+
+def pill(ctx, s, cx, cy, size):
+    """Dark rounded label sized to its text."""
+    ctx.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
+    ctx.set_font_size(size)
+    tw = ctx.text_extents(s)[2]
+    h = size * 2.0
+    pad = size * 1.0
+    rrect(ctx, cx - tw / 2 - pad, cy - h / 2, tw + 2 * pad, h, h / 2)
+    fill_ol(ctx, "#20232a", size * 0.18)
+    mv.text(ctx, s, cx, cy, size, "#ffffff")
 
 
 # ---------------------------------------------------------------- backgrounds
@@ -151,23 +184,51 @@ def dots(ctx, w, h, col="#ffffff", a=0.18, step=46):
     ctx.fill()
 
 
-def confetti(ctx, w, h, seed=4, n=60, region=None):
-    import random
+def confetti(ctx, w, h, seed=4, n=60, avoid=()):
+    """Scattered stars and streamers, kept out of the `avoid` rectangles (x0, y0, x1, y1)."""
     rnd = random.Random(seed)
-    x0, y0, x1, y1 = region or (0, 0, w, h)
-    for _ in range(n):
-        x, y = rnd.uniform(x0, x1), rnd.uniform(y0, y1)
+    placed = 0
+    while placed < n:
+        x, y = rnd.uniform(0, w), rnd.uniform(0, h)
         col = rnd.choice(LETTER_COLS)
-        if rnd.random() < 0.5:
-            star4(ctx, x, y, rnd.uniform(10, 24), col, rnd.uniform(0, 1))
+        size, rot, kind = rnd.uniform(10, 24), rnd.uniform(0, PI), rnd.random()
+        if any(x0 <= x <= x1 and y0 <= y <= y1 for x0, y0, x1, y1 in avoid):
+            continue
+        placed += 1
+        if kind < 0.5:
+            star4(ctx, x, y, size, col, rot)
         else:
             ctx.save()
             ctx.translate(x, y)
-            ctx.rotate(rnd.uniform(0, PI))
+            ctx.rotate(rot)
             rrect(ctx, -12, -5, 24, 10, 4)
             setc(ctx, col)
             ctx.fill()
             ctx.restore()
+
+
+def ground(ctx, w, h, top):
+    """Soft curved stage floor so characters stand on something."""
+    ctx.new_path()
+    ctx.move_to(0, top + 30)
+    ctx.curve_to(w * 0.3, top - 25, w * 0.7, top - 25, w, top + 30)
+    ctx.line_to(w, h)
+    ctx.line_to(0, h)
+    ctx.close_path()
+    g = cairo.LinearGradient(0, top, 0, h)
+    g.add_color_stop_rgb(0, *mv.C("#ffb54d")[:3])
+    g.add_color_stop_rgb(1, *mv.C("#f08a24")[:3])
+    ctx.set_source(g)
+    ctx.fill_preserve()
+    ctx.set_source_rgba(*INK)
+    ctx.set_line_width(6)
+    ctx.stroke()
+
+
+def shadow(ctx, x, y, rx):
+    ell(ctx, x, y, rx, rx * 0.16)
+    setc(ctx, "#000000", 0.18)
+    ctx.fill()
 
 
 def surface(w, h, alpha=False):
@@ -175,10 +236,16 @@ def surface(w, h, alpha=False):
     return s, cairo.Context(s)
 
 
+def cast(ctx, x, y, s, P, expr, look, pose=None, floor=True):
+    if floor:
+        shadow(ctx, x, y + 14 * s, 170 * s)
+    person(ctx, x, y, s, P, expr=expr, t=0.0, look=look, pose=pose, blink=False)
+
+
 # ---------------------------------------------------------------- assets
 def logo(out):
     s, ctx = surface(2000, 1300, alpha=True)
-    mascot(ctx, 1000, 560, 1.05)
+    mascot(ctx, 975, 600, 1.0)
     wordmark(ctx, 1000, 1080, 230)
     s.write_to_png(os.path.join(out, "laughbox-logo.png"))
 
@@ -189,44 +256,39 @@ def avatar(out, size=800):
     ctx.scale(k, k)
     sunburst(ctx, 800, 800, 400, 400)
     dots(ctx, 800, 800, a=0.12)
-    # everything important stays inside the circle crop
-    mascot(ctx, 400, 470, 0.95)
+    # whole mascot stays inside the circular crop (radius 400) with margin
+    mascot(ctx, 382, 488, 0.74)
     s.write_to_png(os.path.join(out, f"profile-{size}x{size}.png"))
 
 
 def watermark(out):
     s, ctx = surface(300, 300, alpha=True)
-    ell(ctx, 150, 150, 146, 146)
+    ell(ctx, 150, 150, 145, 145)
     setc(ctx, SUN)
     ctx.fill_preserve()
     ctx.set_source_rgba(*INK)
     ctx.set_line_width(8)
     ctx.stroke()
-    mascot(ctx, 150, 180, 0.36)
+    mascot(ctx, 140, 178, 0.31, ha=False)
     s.write_to_png(os.path.join(out, "watermark-300x300.png"))
-
-
-def cast(ctx, x, y, s, P, expr, look, pose=None):
-    person(ctx, x, y, s, P, expr=expr, t=0.0, look=look, pose=pose, blink=False)
 
 
 def youtube_banner(out):
     W, H = 2560, 1440
     s, ctx = surface(W, H)
-    sunburst(ctx, W, H, W / 2, H / 2)
+    sunburst(ctx, W, H, W / 2, 720)
     dots(ctx, W, H, a=0.1)
-    confetti(ctx, W, H, n=110)
-    # characters sit outside the 1546x423 all-device safe area (visible on desktop/TV)
-    cast(ctx, 330, 1290, 0.62, GRANDPA, "victory", (0.5, 0), dict(la1=-150, la2=-165, ra1=40, ra2=60))
-    cast(ctx, 2230, 1290, 0.6, GRANDMA, "smug", (-0.6, 0), dict(ra1=100, ra2=140))
-    cast(ctx, 2480, 1190, 0.5, TEEN, "happy", (-0.8, 0))
-    cast(ctx, 80, 1190, 0.5, SHOPPER, "wink", (0.8, 0), dict(thumb=True, ra1=120, ra2=175))
+    ground(ctx, W, H, 1330)
+    confetti(ctx, W, H, n=110, avoid=[(560, 450, 2010, 960), (0, 1300, W, H)])
+    # characters sit outside the 1546x423 all-device safe area; heads show on desktop, full bodies on TV
+    cast(ctx, 150, 1370, 0.56, SHOPPER, "wink", (0.8, 0), dict(thumb=True, ra1=165, ra2=175))
+    cast(ctx, 420, 1380, 0.64, GRANDPA, "victory", (0.6, 0), dict(ra1=150, ra2=165))
+    cast(ctx, 2140, 1380, 0.62, GRANDMA, "happy", (-0.6, 0))
+    cast(ctx, 2410, 1370, 0.56, TEEN, "happy", (-0.8, 0), dict(la1=-160, la2=-170))
     # logo + tagline inside the safe area (x 507-2053, y 508-931)
-    mascot(ctx, 820, 760, 0.52)
-    wordmark(ctx, 1450, 680, 150)
-    rrect(ctx, 1010, 790, 880, 92, 46)
-    fill_ol(ctx, "#20232a", 8)
-    mv.text(ctx, "CARTOON COMEDY  •  NEW EVERY WEEK", 1450, 836, 40, "#ffffff")
+    mascot(ctx, 790, 790, 0.5)
+    wordmark(ctx, 1515, 690, 150)
+    pill(ctx, TAGLINE, 1515, 845, 40)
     s.write_to_png(os.path.join(out, "youtube-banner-2560x1440.png"))
     # review copy with safe areas drawn
     ctx.rectangle(507, 508, 1546, 423)
@@ -244,15 +306,13 @@ def facebook_cover(out):
     s, ctx = surface(W, H)
     sunburst(ctx, W, H, W / 2, H * 0.55)
     dots(ctx, W, H, a=0.1)
-    confetti(ctx, W, H, seed=9, n=70)
-    # mobile crops the sides, so keep logo/text in the centre ~1100 px
-    cast(ctx, 180, 1030, 0.62, GRANDPA, "victory", (0.6, 0), dict(la1=-150, la2=-165, ra1=40, ra2=60))
-    cast(ctx, 1470, 1030, 0.6, GRANDMA, "smug", (-0.6, 0), dict(ra1=100, ra2=140))
-    mascot(ctx, 470, 360, 0.5)
-    wordmark(ctx, 990, 300, 106)
-    rrect(ctx, 645, 390, 690, 76, 38)
-    fill_ol(ctx, "#20232a", 7)
-    mv.text(ctx, "CARTOON COMEDY • NEW EVERY WEEK", 990, 428, 31, "#ffffff")
+    confetti(ctx, W, H, seed=9, n=70, avoid=[(300, 80, 1340, 500)])
+    # characters peek in from the edges; logo/text stay in the centre that mobile keeps
+    cast(ctx, 160, 1060, 0.62, GRANDPA, "victory", (0.6, 0), dict(la1=-155, la2=-170), floor=False)
+    cast(ctx, 1490, 1060, 0.6, GRANDMA, "happy", (-0.6, 0), dict(ra1=155, ra2=170), floor=False)
+    mascot(ctx, 470, 380, 0.48)
+    wordmark(ctx, 1000, 290, 104)
+    pill(ctx, TAGLINE, 1000, 420, 29)
     s.write_to_png(os.path.join(out, "facebook-cover-1640x624.png"))
 
 
