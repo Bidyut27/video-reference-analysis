@@ -3,7 +3,7 @@
 
   python make_thumbnail.py OUT_DIR
 
-Writes thumbnail-1280x720.png (YouTube / Facebook) and cover-1080x1920.png (Shorts / Reels).
+Writes cover-1080x1920.png (9:16 cover for Shorts / Reels).
 """
 import os
 import sys
@@ -55,22 +55,6 @@ def grandpa(ctx, x, base, s):
            pose=dict(la1=-150, la2=-170, ra1=60, ra2=80, lean=4), hold={1: "melon"})
 
 
-def horizontal(out):
-    W, H = 1280, 720
-    s, ctx = mb.surface(W, H)
-    background(ctx, W, H, 1040, 260)
-    glow(ctx, 1050, 300, 260, "#ff2a2a", 0.45)
-    impact_star(ctx, 1050, 300, 170, seed=3)
-    kiosk(ctx, 1050, 800, 0.55, "x")
-    grandpa(ctx, 300, 1195, 0.8)
-    anger(ctx, 470, 330, 34)
-    for x, y, r in ((860, 470, 22), (1210, 120, 18), (90, 120, 16)):
-        star4(ctx, x, y, r, "#ffffff")
-    big_text(ctx, "GRANDPA VS", 560, 105, 96)
-    big_text(ctx, "THE MACHINE", 560, 225, 96, "#ffffff")
-    s.write_to_png(os.path.join(out, "thumbnail-1280x720.png"))
-
-
 def vertical(out):
     W, H = 1080, 1920
     s, ctx = mb.surface(W, H)
@@ -92,7 +76,6 @@ def vertical(out):
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else HERE
     os.makedirs(out, exist_ok=True)
-    horizontal(out)
     vertical(out)
     print("written to", out)
 
