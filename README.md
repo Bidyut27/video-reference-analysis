@@ -16,5 +16,5 @@ A tool designed to analyze, compare, and extract insights from video files again
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/Bidyut27/video-reference-analysis.git](https://github.com/Bidyut27/video-reference-analysis.git)
+   git clone https://github.com/Bidyut27/video-reference-analysis.git
    cd video-reference-analysis
