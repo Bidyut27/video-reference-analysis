@@ -33,7 +33,7 @@ CAST (keep them exactly on-model)
   fish photo, floor lamp), Leo's blue bedroom.
 
 EPISODES ALREADY MADE (don't repeat): 1 Grandpa vs. the Self-Checkout, 2 Grandpa vs. the
-Video Call, 3 Grandma vs. the Robot Vacuum, 4 Leo vs. Homework.
+Video Call, 3 Grandma vs. the Robot Vacuum, 4 Leo vs. Homework, 5 Grandpa vs. the Smart Speaker.
 
 STORY FORMULA (every episode)
 Hook (0-3 s, an absurd image, no establishing shot) -> Setup -> Escalation A -> Escalation B ->

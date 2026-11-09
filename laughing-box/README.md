@@ -10,6 +10,7 @@ Original cartoon comedy for everyone 🌍 · Channel **Laughing Box** · Handle 
 | 2 | Grandpa vs. the Video Call | [video](episodes/02-grandpa-vs-video-call/grandpa-vs-video-call.mp4) (1080p) | [cover](episodes/02-grandpa-vs-video-call/cover-1080x1920.png) | [README](episodes/02-grandpa-vs-video-call/README.md#posting-copy) |
 | 3 | Grandma vs. the Robot Vacuum | [video](episodes/03-grandma-vs-robot-vacuum/grandma-vs-robot-vacuum-4k.mp4) (**4K**) | [cover](episodes/03-grandma-vs-robot-vacuum/cover-1080x1920.png) | [README](episodes/03-grandma-vs-robot-vacuum/README.md#posting-copy) |
 | 4 | Leo vs. Homework | [video](episodes/04-leo-vs-homework/leo-vs-homework-4k.mp4) (**4K**) | [cover](episodes/04-leo-vs-homework/cover-1080x1920.png) | [README](episodes/04-leo-vs-homework/README.md#posting-copy) |
+| 5 | Grandpa vs. the Smart Speaker | [video](episodes/05-grandpa-vs-smart-speaker/grandpa-vs-smart-speaker-4k.mp4) (**4K**) | [cover](episodes/05-grandpa-vs-smart-speaker/cover-1080x1920.png) | [README](episodes/05-grandpa-vs-smart-speaker/README.md#posting-copy) |
 
 Each episode folder also holds the scripts that rebuild it (story, picture, voices, sound, cover) and a contact sheet for review.
 

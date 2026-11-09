@@ -38,6 +38,7 @@ Flat 2D vector cartoon: big round heads, thick dark outlines, rosy cheeks, simpl
 | **Biscuit** | Robot vacuum with a **pink** bow and a heart LED | (silent; motor, bonks, hiccups) |
 | **Cookie** | Robot vacuum with a **blue** bow | (silent) |
 | **Mittens** | Leo's orange tabby cat with green eyes and a smug half-lidded look; sits on homework | (silent; meow, purr) |
+| **The Smart Speaker** | Small dark-grey fabric cylinder with a glowing top ring (blue = talking, rainbow = party, pink = love, red = alarm) and two LED eyes; mishears everything | Machine voice (`af_nicole` + robot filter) |
 
 Caption colours: Grandpa `#ffd25a`, Grandma `#e3c4ff`, Leo `#8fd3ff`, teen `#7ff0e3`, machines `#ffffff`.
 
@@ -51,6 +52,7 @@ Caption colours: Grandpa `#ffd25a`, Grandma `#e3c4ff`, Leo `#8fd3ff`, teen `#7ff
 | Phone and video-call UI, cat filter | `phone`, `call_ui`, `cat_filter` in episode 2 |
 | Robot vacuum, yarn ball, knitting basket | `vacuum`, `yarn_ball`, `basket` in episode 3 |
 | Leo's desk with lamp, day-to-night window, wall clock, books, pencil, sharpener, crayon, Mittens | `room_bg`, `desk`, `clock`, `book`, `pencil`, `cat` in episode 4 |
+| Smart speaker, side table, delivery box, feathers, disco lights and mirror ball, rubber ducks | `speaker`, `side_table`, `box`, `feathers`, `disco_lights`, `duck` in episode 5 |
 
 ## Sound
 
@@ -64,5 +66,6 @@ All synthesised: theme music at 130 BPM in C–F–G–C (marimba melody, plucke
 | 2 | Grandpa vs. the Video Call | `laughing-box/episodes/02-grandpa-vs-video-call/` | Nose, forehead and cat-filter calls with Leo; Grandma fixes it, then turns herself into a cat | 1080p, voice |
 | 3 | Grandma vs. the Robot Vacuum | `laughing-box/episodes/03-grandma-vs-robot-vacuum/` | She adopts it as "Biscuit"; Grandpa rides it and crashes; she brings home "Cookie" | **4K**, voice |
 | 4 | Leo vs. Homework | `laughing-box/episodes/04-leo-vs-homework/` | Phone, cat and pencil distractions; Grandpa "helps" with wild math; it was the history homework | **4K**, voice |
+| 5 | Grandpa vs. the Smart Speaker | `laughing-box/episodes/05-grandpa-vs-smart-speaker/` | It mishears everything ("Baby Duck Disco", 40 feathers, party mode, a 3 a.m. alarm); Grandma's whisper works; the alarm wakes Grandma | **4K**, voice |
 
-Unused ideas: Grandpa vs. the Smart Speaker · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).
+Unused ideas: Grandma vs. the Air Fryer · Mittens vs. the Laser Dot · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).
