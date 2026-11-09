@@ -17,7 +17,7 @@ Read these before starting:
 - [`references/series-bible.md`](references/series-bible.md): characters, voices, colours, sets, episode log. **Stay on-model.**
 - [`../../../laughing-box/production/blueprint.md`](../../../laughing-box/production/blueprint.md): story structure, safe zones and audio rules.
 - [`../../../laughing-box/production/templates.md`](../../../laughing-box/production/templates.md): QC checklist (section 5).
-- The newest episode folder under `laughing-box/episodes/` is the template to copy (currently `laughing-box/episodes/05-grandpa-vs-smart-speaker/`). Name new folders `NN-<slug>` with the next number (e.g. `06-grandma-vs-air-fryer`).
+- The newest episode folder under `laughing-box/episodes/` is the template to copy (currently `laughing-box/episodes/06-grandpas-first-flight/`). Name new folders `NN-<slug>` with the next number (e.g. `07-beach-day-seagull-heist`).
 
 No code execution (a chat-only AI)? Use [`references/chat-prompt.md`](references/chat-prompt.md) instead.
 

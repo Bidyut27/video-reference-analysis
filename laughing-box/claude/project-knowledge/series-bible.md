@@ -39,6 +39,8 @@ Flat 2D vector cartoon: big round heads, thick dark outlines, rosy cheeks, simpl
 | **Cookie** | Robot vacuum with a **blue** bow | (silent) |
 | **Mittens** | Leo's orange tabby cat with green eyes and a smug half-lidded look; sits on homework | (silent; meow, purr) |
 | **The Smart Speaker** | Small dark-grey fabric cylinder with a glowing top ring (blue = talking, rainbow = party, pink = love, red = alarm) and two LED eyes; mishears everything | Machine voice (`af_nicole` + robot filter) |
+| **Rosa** (flight attendant) | Navy uniform, red scarf with a gold wing pin, dark hair in a bun; endlessly polite, slowly losing patience | `af_sarah`, 1.05, 0 |
+| Pilot (voice only) | Heard over the cabin speaker | `am_michael`, 0.95, −1, plus a cabin-PA band filter |
 
 Caption colours: Grandpa `#ffd25a`, Grandma `#e3c4ff`, Leo `#8fd3ff`, teen `#7ff0e3`, machines `#ffffff`.
 
@@ -53,6 +55,7 @@ Caption colours: Grandpa `#ffd25a`, Grandma `#e3c4ff`, Leo `#8fd3ff`, teen `#7ff
 | Robot vacuum, yarn ball, knitting basket | `vacuum`, `yarn_ball`, `basket` in episode 3 |
 | Leo's desk with lamp, day-to-night window, wall clock, books, pencil, sharpener, crayon, Mittens | `room_bg`, `desk`, `clock`, `book`, `pencil`, `cat` in episode 4 |
 | Smart speaker, side table, delivery box, feathers, disco lights and mirror ball, rubber ducks | `speaker`, `side_table`, `box`, `feathers`, `disco_lights`, `duck` in episode 5 |
+| Airplane cabin (overhead bins, seats, aisle), call-button panel, life vest (flat/inflated), window views (runway, clouds, sunset), plane exterior with a Laughing Box tail | `cabin_bg`, `cabin_row`, `seat_back`, `call_panel`, `vest`, `window`, `plane` in episode 6 |
 
 ## Sound
 
@@ -67,5 +70,6 @@ All synthesised: theme music at 130 BPM in C–F–G–C (marimba melody, plucke
 | 3 | Grandma vs. the Robot Vacuum | `laughing-box/episodes/03-grandma-vs-robot-vacuum/` | She adopts it as "Biscuit"; Grandpa rides it and crashes; she brings home "Cookie" | **4K**, voice |
 | 4 | Leo vs. Homework | `laughing-box/episodes/04-leo-vs-homework/` | Phone, cat and pencil distractions; Grandpa "helps" with wild math; it was the history homework | **4K**, voice |
 | 5 | Grandpa vs. the Smart Speaker | `laughing-box/episodes/05-grandpa-vs-smart-speaker/` | It mishears everything ("Baby Duck Disco", 40 feathers, party mode, a 3 a.m. alarm); Grandma's whisper works; the alarm wakes Grandma | **4K**, voice |
+| 6 | Grandpa's First Flight | `laughing-box/episodes/06-grandpas-first-flight/` | Seat belt mix-up, the life-vest tab ("POOF!"), takeoff, 40 call-button presses; he loves it just as they land and gets stuck in the seat | **4K**, voice |
 
-Unused ideas: Grandma vs. the Air Fryer · Mittens vs. the Laser Dot · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).
+Unused ideas: Beach Day: The Seagull Heist · The Family Photo · Grandpa Learns to Dance · The Night Snack Mission · Picnic vs. the Ants · Grandma vs. the Air Fryer · Mittens vs. the Laser Dot · Grandpa vs. the Automatic Door · First Day at the Gym (new character) · The Delivery Driver (new character).

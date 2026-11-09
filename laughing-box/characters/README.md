@@ -25,6 +25,7 @@ Every image is drawn by the same code the episodes use, so the characters are ex
 | Sleepy grandad | [`queue-grandad.png`](queue-grandad.png) | Pickle Mart customer |
 | Balloon kid | [`queue-kid.png`](queue-kid.png) | Pickle Mart customer |
 | Self-checkout | [`self-checkout.png`](self-checkout.png) | Grandpa's first enemy |
+| Rosa | [`rosa.png`](rosa.png) | Flight attendant, polite, losing patience |
 
 ## Expression sheets
 

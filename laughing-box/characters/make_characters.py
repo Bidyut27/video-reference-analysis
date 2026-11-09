@@ -16,10 +16,10 @@ import sys
 import cairo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-EP5 = os.path.join(HERE, "..", "episodes", "05-grandpa-vs-smart-speaker")
+EP6 = os.path.join(HERE, "..", "episodes", "06-grandpas-first-flight")
 
-# episode 5's loader pulls in every earlier episode, so all characters and props are available
-_spec = importlib.util.spec_from_file_location("ep1", os.path.join(EP5, "ep1.py"))
+# the newest episode's loader pulls in every earlier episode, so all characters and props are available
+_spec = importlib.util.spec_from_file_location("ep1", os.path.join(EP6, "ep1.py"))
 ep1 = importlib.util.module_from_spec(_spec)
 sys.modules["ep1"] = ep1
 _spec.loader.exec_module(ep1)
@@ -27,7 +27,8 @@ mv = ep1.video()
 e2 = ep1.ep2_video()
 e3 = ep1.ep3_video()
 e4 = ep1.ep4_video()
-e5 = ep1.load(os.path.join(EP5, "make_video.py"), "ep5_video")
+e5 = ep1.ep5_video()
+e6 = ep1.load(os.path.join(EP6, "make_video.py"), "ep6_video")
 mb = ep1.load(os.path.join(ep1.BRANDING, "make_branding.py"), "make_branding")
 mv.TRACK = []  # no dialogue: mouths and speaker stay in their resting pose
 mv.CUR_T = 0.0
@@ -58,6 +59,10 @@ def speaker_fn(ctx, x, y, s):
     e5.speaker(ctx, x, y, s * 2.6, 0.0, "idle")
 
 
+def rosa_fn(ctx, x, y, s):
+    e6.rosa(ctx, x, y, s, "happy", 0.0, look=(0, 0.1), pose=dict(ra1=60, ra2=110))
+
+
 def kiosk_fn(ctx, x, y, s):
     mv.kiosk(ctx, x, y, s * 0.95, "x")
 
@@ -86,6 +91,7 @@ CAST = [
     ("queue-kid", "BALLOON KID", "Pickle Mart customer", person_fn(mv.Q_KID, "happy", dict(ra1=150, ra2=175)),
      900, 1700, 0.85, 0.96),
     ("self-checkout", "SELF-CHECKOUT", "Grandpa's first enemy", kiosk_fn, 800, 1300, 1.0, 0.95),
+    ("rosa", "ROSA", "Flight attendant · polite, losing patience", rosa_fn, 900, 1300, 1.0, 0.95),
 ]
 
 
